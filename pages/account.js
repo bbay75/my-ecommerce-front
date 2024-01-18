@@ -16,9 +16,13 @@ import SingleOrder from "@/components/SingleOrder";
 
 const ColsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1fr;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
   gap: 40px;
-  margin: 40px 0;
+  margin-top: 40px;
+  margin-bottom: 40px;
   p {
     margin: 5px;
   }
@@ -98,69 +102,9 @@ export default function AccountPage() {
       <Center>
         <ColsWrapper>
           <div>
-            <RevealWrapper delay={0}>
-              <WhiteBox>
-                <Tabs
-                  tabs={["Захиалга", "Хүслийн жигсаалт"]}
-                  active={activeTab}
-                  onChange={setActiveTab}
-                />
-                {activeTab === "Захиалга" && (
-                  <>
-                    {!orderLoaded && <Spinner fullWidth={true} />}
-                    {orderLoaded && (
-                      <div>
-                        {orders.length === 0 && (
-                          <p>Захиалгаа харахын тулд нэвтэрнэ үү</p>
-                        )}
-                        {orders.length > 0 &&
-                          orders.map((o) => <SingleOrder key={o._id} {...o} />)}
-                      </div>
-                    )}
-                  </>
-                )}
-                {activeTab === "Хүслийн жигсаалт" && (
-                  <>
-                    {!wishlistLoaded && <Spinner fullWidth={true} />}
-                    {wishlistLoaded && (
-                      <>
-                        <WishedProductsGrid>
-                          {wishedProducts.length > 0 &&
-                            wishedProducts.map((wp) => (
-                              <ProductBox
-                                key={wp._id}
-                                {...wp}
-                                wished={true}
-                                onRemoveFromWishlist={
-                                  productRemovedFromWishlist
-                                }
-                              />
-                            ))}
-                        </WishedProductsGrid>
-                        {wishedProducts.length === 0 && (
-                          <>
-                            {session && (
-                              <p>Таны хүслийн жагсаалт хоосон байна</p>
-                            )}
-                            {!session && (
-                              <p>
-                                Хүслийн жагсаалтад бүтээгдэхүүн нэмэхийн тулд
-                                нэвтэрнэ үү
-                              </p>
-                            )}
-                          </>
-                        )}
-                      </>
-                    )}
-                  </>
-                )}
-              </WhiteBox>
-            </RevealWrapper>
-          </div>
-          <div>
             <RevealWrapper delay={100}>
               <WhiteBox>
-                <h2>{session ? "Хэрэглэгчийн бүртгэл" : "Гарах"}</h2>
+                <h2>{session ? "Account details" : "Гарах"}</h2>
                 {!addressLoaded && <Spinner fullWidth={true} />}
                 {addressLoaded && session && (
                   <>
@@ -223,6 +167,66 @@ export default function AccountPage() {
                   <Button primary onClick={login}>
                     Google-ээр нэвтэрнэ үү
                   </Button>
+                )}
+              </WhiteBox>
+            </RevealWrapper>
+          </div>
+          <div>
+            <RevealWrapper delay={0}>
+              <WhiteBox>
+                <Tabs
+                  tabs={["Orders", "Wishlist"]}
+                  active={activeTab}
+                  onChange={setActiveTab}
+                />
+                {activeTab === "Orders" && (
+                  <>
+                    {!orderLoaded && <Spinner fullWidth={true} />}
+                    {orderLoaded && (
+                      <div>
+                        {orders.length === 0 && (
+                          <p>Захиалгаа харахын тулд нэвтэрнэ үү</p>
+                        )}
+                        {orders.length > 0 &&
+                          orders.map((o) => <SingleOrder key={o._id} {...o} />)}
+                      </div>
+                    )}
+                  </>
+                )}
+                {activeTab === "Wishlist" && (
+                  <>
+                    {!wishlistLoaded && <Spinner fullWidth={true} />}
+                    {wishlistLoaded && (
+                      <>
+                        <WishedProductsGrid>
+                          {wishedProducts.length > 0 &&
+                            wishedProducts.map((wp) => (
+                              <ProductBox
+                                key={wp._id}
+                                {...wp}
+                                wished={true}
+                                onRemoveFromWishlist={
+                                  productRemovedFromWishlist
+                                }
+                              />
+                            ))}
+                        </WishedProductsGrid>
+                        {wishedProducts.length === 0 && (
+                          <>
+                            {session && (
+                              <p>Таны хүслийн жагсаалт хоосон байна</p>
+                            )}
+                            {!session && (
+                              <p>
+                                Хүслийн жагсаалтад бүтээгдэхүүн нэмэхийн тулд
+                                нэвтэрнэ үү
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
                 )}
               </WhiteBox>
             </RevealWrapper>
