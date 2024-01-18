@@ -69,7 +69,7 @@ export default function SearchPage() {
 
         {!isLoading && products.length === 0 && phrase === "" && (
           <div class="text-center">
-            Та хайх бүтээгдэхүүнийхээ нэрийг "Англи" үгээр оруулна уу?
+            Та хайх бүтээгдэхүүнийхээ нэрийг Англи үгээр оруулна уу?
           </div>
         )}
       </Center>
