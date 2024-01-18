@@ -79,36 +79,36 @@ export default function ProductReviews({ product }) {
   }
   return (
     <div>
-      <Title>Reviews</Title>
+      <Title>Үнэлгээ</Title>
       <ColsWrapper>
         <div>
           <WhiteBox>
-            <Subtitle>Add a review</Subtitle>
+            <Subtitle>Үнэлгээ өгөх</Subtitle>
             <div>
               <StarsRating onChange={setStars} />
             </div>
             <Input
               value={title}
               onChange={(ev) => setTitle(ev.target.value)}
-              placeholder="Title"
+              placeholder="Гарчиг"
             />
             <Textarea
               value={description}
               onChange={(ev) => setDescription(ev.target.value)}
-              placeholder="Was it good? Pros? Cons?"
+              placeholder="Танд таалагдсан уу? Давуу тал, Сул тал"
             />
             <div>
               <Button primary onClick={submitReview}>
-                Submit your review
+                Үнэлгээгээ илгээнэ үү
               </Button>
             </div>
           </WhiteBox>
         </div>
         <div>
           <WhiteBox>
-            <Subtitle>All reviews</Subtitle>
+            <Subtitle>Үнэлэмжүүд</Subtitle>
             {reviewsLoading && <Spinner fullWidth={true} />}
-            {reviews.length === 0 && <p>No reviews :(</p>}
+            {reviews.length === 0 && <p>Үнэлгээ алга :(</p>}
             {reviews.length > 0 &&
               reviews.map((review) => (
                 <ReviewWrapper key={review._id}>
@@ -119,7 +119,7 @@ export default function ProductReviews({ product }) {
                       defaultHowMany={review.stars}
                     />
                     <time>
-                      {new Date(review.createdAt).toLocaleString("sv-SE")}
+                      {new Date(review.createdAt).toLocaleString("mo-MN")}
                     </time>
                   </ReviewHeader>
                   <h3>{review.title}</h3>

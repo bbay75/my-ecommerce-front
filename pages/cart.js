@@ -166,8 +166,11 @@ export default function CartPage() {
         <Center>
           <ColumnsWrapper>
             <Box>
-              <h1>Thanks for your order!</h1>
-              <p>We will email you when your order will be sent.</p>
+              <h1>Захиалга өгсөнд баярлалаа!</h1>
+              <p>
+                We will email you when your order will be sent.Таны захиалгыг
+                илгээх үед бид танд имэйл илгээх болно.
+              </p>
             </Box>
           </ColumnsWrapper>
         </Center>
@@ -181,15 +184,15 @@ export default function CartPage() {
         <ColumnsWrapper>
           <RevealWrapper delay={0}>
             <Box>
-              <h2>Cart</h2>
-              {!cartProducts?.length && <div>Your cart is empty</div>}
+              <h2>Сагс</h2>
+              {!cartProducts?.length && <div>Таны карт хоосон байна</div>}
               {products?.length > 0 && (
                 <Table>
                   <thead>
                     <tr>
-                      <th>Product</th>
-                      <th>Quantity</th>
-                      <th>Price</th>
+                      <th>Бүтээгдэхүүн</th>
+                      <th>Тоо хэмжээ</th>
+                      <th>Үнэ</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -220,23 +223,23 @@ export default function CartPage() {
                           </Button>
                         </td>
                         <td>
-                          $
                           {cartProducts.filter((id) => id === product._id)
                             .length * product.price}
+                          ₮
                         </td>
                       </tr>
                     ))}
                     <tr className="subtotal">
-                      <td colSpan={2}>Products</td>
-                      <td>${productsTotal}</td>
+                      <td colSpan={2}>Бүтээгдэхүүн</td>
+                      <td>{productsTotal}₮</td>
                     </tr>
                     <tr className="subtotal">
-                      <td colSpan={2}>Shipping</td>
-                      <td>${shippingFee}</td>
+                      <td colSpan={2}>Хүргэлт</td>
+                      <td>{shippingFee}₮</td>
                     </tr>
                     <tr className="subtotal total">
-                      <td colSpan={2}>Total</td>
-                      <td>${productsTotal + parseInt(shippingFee || 0)}</td>
+                      <td colSpan={2}>Нийт дүн</td>
+                      <td>{productsTotal + parseInt(shippingFee || 0)}₮</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -246,7 +249,7 @@ export default function CartPage() {
           {!!cartProducts?.length && (
             <RevealWrapper delay={100}>
               <Box>
-                <h2>Order information</h2>
+                <h2>Захиалгын мэдээлэл</h2>
                 <Input
                   type="text"
                   placeholder="Name"
@@ -292,7 +295,7 @@ export default function CartPage() {
                   onChange={(ev) => setCountry(ev.target.value)}
                 />
                 <Button black block onClick={goToPayment}>
-                  Continue to payment
+                  Төлбөрийг үргэлжлүүлнэ үү
                 </Button>
               </Box>
             </RevealWrapper>

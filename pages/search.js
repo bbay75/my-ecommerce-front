@@ -26,6 +26,7 @@ export default function SearchPage() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedSearch = useCallback(debounce(searchProducts, 500), []);
+
   useEffect(() => {
     if (phrase.length > 0) {
       setIsLoading(true);
@@ -34,7 +35,6 @@ export default function SearchPage() {
       setProducts([]);
     }
   }, [phrase]);
-
   function searchProducts(phrase) {
     axios
       .get("/api/products?phrase=" + encodeURIComponent(phrase))
@@ -52,15 +52,25 @@ export default function SearchPage() {
             autoFocus
             value={phrase}
             onChange={(ev) => setPhrase(ev.target.value)}
-            placeholder="Search for products..."
+            placeholder="Бүтээгдэхүүн хайх..."
           />
         </InputWrapper>
+
         {!isLoading && phrase !== "" && products.length === 0 && (
-          <h2>No products found for query &quot;{phrase}&quot;</h2>
+          <h2 className="text-center">
+            Таны хайсан &quot;{phrase}&quot; бүтээгдэхүүн олдсонгүй
+          </h2>
         )}
+
         {isLoading && <Spinner fullWidth={true} />}
         {!isLoading && products.length > 0 && (
           <ProductsGrid products={products} />
+        )}
+
+        {!isLoading && products.length === 0 && phrase === "" && (
+          <div class="text-center">
+            Та хайх бүтээгдэхүүнийхээ нэрийг "Англи" үгээр оруулна уу?
+          </div>
         )}
       </Center>
     </>

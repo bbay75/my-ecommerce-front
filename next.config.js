@@ -4,6 +4,23 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-}
+};
+// next.config.js
+module.exports = {
+  target: "serverless", // Ensure you are using the serverless target
+};
 
-module.exports = nextConfig
+// next.config.js
+module.exports = {
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Exclude fs import in client-side code
+      config.resolve.fallback = {
+        fs: false,
+      };
+    }
+    return config;
+  },
+};
+
+module.exports = nextConfig;

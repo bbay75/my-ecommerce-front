@@ -64,7 +64,7 @@ export default function CategoriesPage({
             <CategoryTitle>
               <h2>{cat.name}</h2>
               <div>
-                <Link href={"/category/" + cat._id}>Show all</Link>
+                <Link href={"/category/" + cat._id}>Бүгдийг харах</Link>
               </div>
             </CategoryTitle>
             <CategoryGrid>
@@ -75,7 +75,7 @@ export default function CategoriesPage({
               ))}
               <RevealWrapper delay={categoriesProducts[cat._id].length * 50}>
                 <ShowAllSquare href={"/category/" + cat._id}>
-                  Show all &rarr;
+                  Бүгдийг харах &rarr;
                 </ShowAllSquare>
               </RevealWrapper>
             </CategoryGrid>

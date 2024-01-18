@@ -101,23 +101,25 @@ export default function AccountPage() {
             <RevealWrapper delay={0}>
               <WhiteBox>
                 <Tabs
-                  tabs={["Orders", "Wishlist"]}
+                  tabs={["Захиалга", "Хүслийн жигсаалт"]}
                   active={activeTab}
                   onChange={setActiveTab}
                 />
-                {activeTab === "Orders" && (
+                {activeTab === "Захиалга" && (
                   <>
                     {!orderLoaded && <Spinner fullWidth={true} />}
                     {orderLoaded && (
                       <div>
-                        {orders.length === 0 && <p>Login to see your orders</p>}
+                        {orders.length === 0 && (
+                          <p>Захиалгаа харахын тулд нэвтэрнэ үү</p>
+                        )}
                         {orders.length > 0 &&
                           orders.map((o) => <SingleOrder key={o._id} {...o} />)}
                       </div>
                     )}
                   </>
                 )}
-                {activeTab === "Wishlist" && (
+                {activeTab === "Хүслийн жигсаалт" && (
                   <>
                     {!wishlistLoaded && <Spinner fullWidth={true} />}
                     {wishlistLoaded && (
@@ -137,9 +139,14 @@ export default function AccountPage() {
                         </WishedProductsGrid>
                         {wishedProducts.length === 0 && (
                           <>
-                            {session && <p>Your wishlist is empty</p>}
+                            {session && (
+                              <p>Таны хүслийн жагсаалт хоосон байна</p>
+                            )}
                             {!session && (
-                              <p>Login to add products to your wishlist</p>
+                              <p>
+                                Хүслийн жагсаалтад бүтээгдэхүүн нэмэхийн тулд
+                                нэвтэрнэ үү
+                              </p>
                             )}
                           </>
                         )}
@@ -153,20 +160,20 @@ export default function AccountPage() {
           <div>
             <RevealWrapper delay={100}>
               <WhiteBox>
-                <h2>{session ? "Account details" : "Login"}</h2>
+                <h2>{session ? "Хэрэглэгчийн бүртгэл" : "Гарах"}</h2>
                 {!addressLoaded && <Spinner fullWidth={true} />}
                 {addressLoaded && session && (
                   <>
                     <Input
                       type="text"
-                      placeholder="Name"
+                      placeholder="Нэр"
                       value={name}
                       name="name"
                       onChange={(ev) => setName(ev.target.value)}
                     />
                     <Input
                       type="text"
-                      placeholder="Email"
+                      placeholder="И-Мэйл"
                       value={email}
                       name="email"
                       onChange={(ev) => setEmail(ev.target.value)}
@@ -174,14 +181,14 @@ export default function AccountPage() {
                     <CityHolder>
                       <Input
                         type="text"
-                        placeholder="City"
+                        placeholder="Хот"
                         value={city}
                         name="city"
                         onChange={(ev) => setCity(ev.target.value)}
                       />
                       <Input
                         type="text"
-                        placeholder="Postal Code"
+                        placeholder="Шуудангийн код"
                         value={postalCode}
                         name="postalCode"
                         onChange={(ev) => setPostalCode(ev.target.value)}
@@ -189,32 +196,32 @@ export default function AccountPage() {
                     </CityHolder>
                     <Input
                       type="text"
-                      placeholder="Street Address"
+                      placeholder="Гудамжны хаяг"
                       value={streetAddress}
                       name="streetAddress"
                       onChange={(ev) => setStreetAddress(ev.target.value)}
                     />
                     <Input
                       type="text"
-                      placeholder="Country"
+                      placeholder="Улс"
                       value={country}
                       name="country"
                       onChange={(ev) => setCountry(ev.target.value)}
                     />
                     <Button black block onClick={saveAddress}>
-                      Save
+                      Хадгалах
                     </Button>
                     <hr />
                   </>
                 )}
                 {session && (
                   <Button primary onClick={logout}>
-                    Logout
+                    Гарах
                   </Button>
                 )}
                 {!session && (
                   <Button primary onClick={login}>
-                    Login with Google
+                    Google-ээр нэвтэрнэ үү
                   </Button>
                 )}
               </WhiteBox>
