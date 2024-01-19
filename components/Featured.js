@@ -24,7 +24,7 @@ const Desc = styled.p`
 `;
 const ColumnsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   img.main {
     max-width: 100%;
