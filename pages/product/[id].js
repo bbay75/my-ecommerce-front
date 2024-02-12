@@ -59,12 +59,14 @@ export default function ProductPage({ product }) {
               <div>
                 {product.properties?.length > 0 &&
                   product.properties.map((prop) => (
-                    <div>
+                    <div key={prop.name}>
                       <Title>{prop.name}</Title>
 
                       <select>
                         {prop.values.map((val) => (
-                          <option value={val}>{val}</option>
+                          <option key={val} value={val}>
+                            {val}
+                          </option>
                         ))}
                       </select>
                     </div>

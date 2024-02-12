@@ -3,7 +3,7 @@ import Title from "@/components/Title";
 import Center from "@/components/Center";
 import { Category } from "@/models/Category";
 import { Product } from "@/models/Product";
-import ProductsGrid from "@/components/ProductsGrid";
+
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -154,7 +154,7 @@ export default function CategoryPage({
         {!loadingProducts && (
           <ParentCatGrid>
             {parentCategory.map((parent) => (
-              <div>
+              <div key={parent.name}>
                 <Title>{parent.name}</Title>
                 <div>
                   <CategoryGrid>
