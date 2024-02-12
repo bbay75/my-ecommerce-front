@@ -5,7 +5,8 @@ import { useContext, useState } from "react";
 import { CartContext } from "@/components/CartContext";
 import BarsIcon from "@/components/icons/Bars";
 import SearchIcon from "@/components/icons/SearchIcon";
-
+import DropMenu from "./DropMenu";
+import items from "../data/sidebar.json";
 const StyledHeader = styled.header`
   background-color: #222;
   position: sticky;
@@ -59,6 +60,20 @@ const NavLink = styled(Link)`
     padding: 0;
   }
 `;
+const DropMen = styled.div`
+  display: block;
+  color: #aaa;
+  text-decoration: none;
+  min-width: 30px;
+  padding: 10px 0;
+  svg {
+    height: 20px;
+  }
+  @media screen and (min-width: 768px) {
+    padding: 0;
+    display: none;
+  }
+`;
 const NavButton = styled.button`
   background-color: transparent;
   width: 30px;
@@ -95,6 +110,11 @@ export default function Header() {
         <Wrapper>
           <Logo href={"/"}>DSHOP</Logo>
           <StyledNav mobileNavActive={mobileNavActive}>
+            <DropMen>
+              {items.map((item, index) => (
+                <DropMenu key={index} item={item} />
+              ))}
+            </DropMen>
             <NavLink href={"/"}>Нүүр</NavLink>
             <NavLink href={"/products"}>Бүтээгдэхүүн</NavLink>
             <NavLink href={"/categories"}>Ангилал</NavLink>

@@ -93,6 +93,7 @@ export default function AccountPage() {
   }, [session]);
   function productRemovedFromWishlist(idToRemove) {
     setWishedProducts((products) => {
+      console.log(products?.properties);
       return [...products.filter((p) => p._id.toString() !== idToRemove)];
     });
   }

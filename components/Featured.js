@@ -4,6 +4,16 @@ import ButtonLink from "@/components/ButtonLink";
 import CartIcon from "@/components/icons/CartIcon";
 import FlyingButton from "@/components/FlyingButton";
 import { RevealWrapper } from "next-reveal";
+import React, { useRef, useState } from "react";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+
+// import required modules
+import { Navigation } from "swiper/modules";
 
 const Bg = styled.div`
   background-color: #222;
@@ -73,44 +83,63 @@ const ContentWrapper = styled.div``;
 
 export default function Featured({ product }) {
   return (
-    <Bg>
-      <Center>
-        <ColumnsWrapper>
-          <Column>
-            <div>
-              <RevealWrapper origin={"left"} delay={0}>
-                <ContentWrapper>
-                  <Title>{product.title}</Title>
-                  <Desc>{product.description}</Desc>
-                  <ButtonsWrapper>
-                    <ButtonLink
-                      href={"/product/" + product._id}
-                      outline={1}
-                      white={1}
-                    >
-                      Дэлгэрэнгүй
-                    </ButtonLink>
-                    <FlyingButton
-                      white={1}
-                      _id={product._id}
-                      src={product.images?.[0]}
-                    >
-                      <CartIcon /> Нэмэх
-                    </FlyingButton>
-                  </ButtonsWrapper>
-                </ContentWrapper>
-              </RevealWrapper>
-            </div>
-          </Column>
-          <ImgColumn>
-            <RevealWrapper delay={0}>
-              <CenterImg>
-                <img className={"main"} src={product.images?.[0]} alt="" />
-              </CenterImg>
-            </RevealWrapper>
-          </ImgColumn>
-        </ColumnsWrapper>
-      </Center>
-    </Bg>
+    <>
+      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
+        <SwiperSlide>
+          <Bg>
+            <Center>
+              <ColumnsWrapper>
+                <Column>
+                  <div>
+                    <RevealWrapper origin={"left"} delay={0}>
+                      <ContentWrapper>
+                        <Title>{product.title}</Title>
+
+                        <Desc>{product.description}</Desc>
+                        <ButtonsWrapper>
+                          <ButtonLink
+                            href={"/product/" + product._id}
+                            outline={1}
+                            white={1}
+                          >
+                            Дэлгэрэнгүй
+                          </ButtonLink>
+                          <FlyingButton
+                            white={1}
+                            _id={product._id}
+                            src={product.images?.[0]}
+                          >
+                            <CartIcon /> Нэмэх
+                          </FlyingButton>
+                        </ButtonsWrapper>
+                      </ContentWrapper>
+                    </RevealWrapper>
+                  </div>
+                </Column>
+                <ImgColumn>
+                  <RevealWrapper delay={0}>
+                    <CenterImg>
+                      <img
+                        className={"main"}
+                        src={product.images?.[0]}
+                        alt=""
+                      />
+                    </CenterImg>
+                  </RevealWrapper>
+                </ImgColumn>
+              </ColumnsWrapper>
+            </Center>
+          </Bg>
+        </SwiperSlide>
+        <SwiperSlide>Slide 1</SwiperSlide>
+        <SwiperSlide>Slide 2</SwiperSlide>
+        <SwiperSlide>Slide 3</SwiperSlide>
+        <SwiperSlide>Slide 4</SwiperSlide>
+        <SwiperSlide>Slide 5</SwiperSlide>
+        <SwiperSlide>Slide 6</SwiperSlide>
+        <SwiperSlide>Slide 7</SwiperSlide>
+        <SwiperSlide>Slide 8</SwiperSlide>
+      </Swiper>
+    </>
   );
 }

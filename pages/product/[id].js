@@ -27,6 +27,10 @@ const PriceRow = styled.div`
 const Price = styled.span`
   font-size: 1.4rem;
 `;
+// const Option = styled.div`
+//   border: solid;
+//   padding: 20px;
+// `;
 
 export default function ProductPage({ product }) {
   return (
@@ -44,15 +48,32 @@ export default function ProductPage({ product }) {
               <div>
                 <Price>${product.price}</Price>
               </div>
+
               <div>
                 <FlyingButton main _id={product._id} src={product.images?.[0]}>
                   <CartIcon />
                   Сагсанд нэмэх
                 </FlyingButton>
               </div>
+
+              <div>
+                {product.properties?.length > 0 &&
+                  product.properties.map((prop) => (
+                    <div>
+                      <Title>{prop.name}</Title>
+
+                      <select>
+                        {prop.values.map((val) => (
+                          <option value={val}>{val}</option>
+                        ))}
+                      </select>
+                    </div>
+                  ))}
+              </div>
             </PriceRow>
           </div>
         </ColWrapper>
+
         <ProductReviews product={product} />
       </Center>
     </>
@@ -63,6 +84,7 @@ export async function getServerSideProps(context) {
   await mongooseConnect();
   const { id } = context.query;
   const product = await Product.findById(id);
+
   return {
     props: {
       product: JSON.parse(JSON.stringify(product)),

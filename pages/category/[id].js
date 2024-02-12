@@ -8,20 +8,25 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
+import ProductBox from "@/components/ProductBox";
+import { RevealWrapper } from "next-reveal";
 
 const CategoryHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
-  h1 {
-    font-size: 1.5em;
-  }
+  margin-top: 10px;
 `;
 const FiltersWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr;
   gap: 15px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 `;
+
 const Filter = styled.div`
   background-color: #ddd;
   padding: 5px 10px;
@@ -36,11 +41,30 @@ const Filter = styled.div`
     color: #444;
   }
 `;
+const ParentCatGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+`;
+const CategoryGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+`;
 
 export default function CategoryPage({
   category,
   subCategories,
   products: originalProducts,
+  parentCategory,
+  parentCatProducts,
 }) {
   const defaultSorting = "_id-desc";
   const defaultFilterValues = category.properties.map((p) => ({
@@ -86,8 +110,9 @@ export default function CategoryPage({
     <>
       <Header />
       <Center>
+        <Title>{category.name}</Title>
+
         <CategoryHeader>
-          <h1>{category.name}</h1>
           <FiltersWrapper>
             {category.properties.map((prop) => (
               <Filter key={prop.name}>
@@ -124,7 +149,29 @@ export default function CategoryPage({
             </Filter>
           </FiltersWrapper>
         </CategoryHeader>
+        {/* parent categories */}
         {loadingProducts && <Spinner fullWidth />}
+        {!loadingProducts && (
+          <ParentCatGrid>
+            {parentCategory.map((parent) => (
+              <div>
+                <Title>{parent.name}</Title>
+                <div>
+                  <CategoryGrid>
+                    {parentCatProducts[parent._id].map((p, index) => (
+                      <RevealWrapper key={index} delay={index * 50}>
+                        <div>{p.title}</div>
+                        <ProductBox {...p} />
+                      </RevealWrapper>
+                    ))}
+                  </CategoryGrid>
+                </div>
+              </div>
+            ))}
+          </ParentCatGrid>
+        )}
+
+        {/* {loadingProducts && <Spinner fullWidth />}
         {!loadingProducts && (
           <div>
             {products.length > 0 && <ProductsGrid products={products} />}
@@ -132,7 +179,7 @@ export default function CategoryPage({
               <div>Уучлаарай, бүтээгдэхүүн олдсонгүй</div>
             )}
           </div>
-        )}
+        )} */}
       </Center>
     </>
   );
@@ -143,11 +190,24 @@ export async function getServerSideProps(context) {
   const subCategories = await Category.find({ parent: category._id });
   const catIds = [category._id, ...subCategories.map((c) => c._id)];
   const products = await Product.find({ category: catIds });
+  // parent
+  const categories = await Category.find();
+  const parentCategory = categories.filter((c) => c.parent);
+  const parentCatProducts = {};
+  for (const parentCatId of parentCategory) {
+    const product = await Product.find({ category: parentCatId._id }, null, {
+      limit: 3,
+      sort: { _id: -1 },
+    });
+    parentCatProducts[parentCatId._id] = product;
+  }
   return {
     props: {
       category: JSON.parse(JSON.stringify(category)),
       subCategories: JSON.parse(JSON.stringify(subCategories)),
       products: JSON.parse(JSON.stringify(products)),
+      parentCategory: JSON.parse(JSON.stringify(parentCategory)),
+      parentCatProducts: JSON.parse(JSON.stringify(parentCatProducts)),
     },
   };
 }

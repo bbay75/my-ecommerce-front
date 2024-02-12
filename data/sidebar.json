@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Categories",
+    "icon": "bi-person-fill",
+    "childrens": [
+      {
+        "title": "subcategories",
+        "path": "/profile"
+      },
+      {
+        "title": "Categories",
+        "childrens": [
+          {
+            "title": "subcategories",
+            "path": "/settings/account"
+          },
+          {
+            "title": "Categories",
+            "childrens": [
+              {
+                "title": "subcategories",
+                "path": "/settings/billing/payment"
+              },
+              {
+                "title": "subcategories",
+                "path": "/settings/billing/subscription"
+              }
+            ]
+          },
+          {
+            "title": "Notifications",
+            "path": "/settings/notifications"
+          }
+        ]
+      }
+    ]
+  }
+]
